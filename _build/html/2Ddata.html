@@ -1,0 +1,905 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>2D数据结构———以2维直线束为例 &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '2Ddata';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="数据结构" href="%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    astra包中文说明和示例
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="markdown.html">安装指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="env.html">在Jupyter Notebook中配置ASTRA工具箱环境</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="%E7%A1%AE%E5%AE%9A%E5%87%A0%E4%BD%95.html">确定几何</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="par.html">确定扫描场景的几何参数———以2维直线束为例</a></li>
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="beam.html">确定扫描场景的几何参数———以2维扇形束为例</a></li>
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="vec.html">确定扫描场景的几何参数———非标准圆轨迹</a></li>
+
+
+
+
+
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html">数据结构</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">2D数据结构———以2维直线束为例</a></li>
+
+
+
+
+
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2F2Ddata.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/2Ddata.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>2D数据结构———以2维直线束为例</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">2D数据结构———以2维直线束为例</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#span-style-font-size-30px-color-blue-1-span"><span style="font-size: 30px; color: blue;">1. 导入工具包</span></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#span-style-font-size-30px-color-blue-2-span"><span style="font-size: 30px; color: blue;">2. 确定几何</span></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#span-style-font-size-30px-color-blue-3-span"><span style="font-size: 30px; color: blue;">3.创建数据对象</span></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#span-style-font-size-30px-color-blue-4-astra2d-span"><span style="font-size: 30px; color: blue;">4.编辑astra2D数据对象</span></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#span-style-font-size-30px-color-blue-5-span"><span style="font-size: 30px; color: blue;">5. 其他操作</span></a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="d2">
+<h1>2D数据结构———以2维直线束为例<a class="headerlink" href="#d2" title="Permalink to this heading">#</a></h1>
+<p><span style="font-size: 20px; color: black;">本文展示astra的2D数据允许的函数操作以及如何进行内存管理</span></p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="span-style-font-size-30px-color-blue-1-span">
+<h1><span style="font-size: 30px; color: blue;">1. 导入工具包</span><a class="headerlink" href="#span-style-font-size-30px-color-blue-1-span" title="Permalink to this heading">#</a></h1>
+<p><span style="font-size: 20px; color: black;">python文件的第一步通常是引入所需要的包</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">astra</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>  <span class="c1">#python主要的矩阵数据处理库</span>
+<span class="kn">import</span> <span class="nn">pylab</span>        <span class="c1">#用于可视化</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">astra</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>  <span class="c1">#python主要的矩阵数据处理库</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">pylab</span>        <span class="c1">#用于可视化</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;pylab&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="span-style-font-size-30px-color-blue-2-span">
+<h1><span style="font-size: 30px; color: blue;">2. 确定几何</span><a class="headerlink" href="#span-style-font-size-30px-color-blue-2-span" title="Permalink to this heading">#</a></h1>
+<p><span style="font-size: 20px; color: black;">我们需要根据实际场景确定工程的几何参数设置.以下面图片展示的场景为例子</span></p>
+<p><img alt="image.png" src="_images/CT_par.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#体积参数</span>
+<span class="n">vol_geom</span> <span class="o">=</span> <span class="n">astra</span><span class="o">.</span><span class="n">create_vol_geom</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+<span class="c1">#投影参数</span>
+<span class="n">proj_geom</span> <span class="o">=</span> <span class="n">astra</span><span class="o">.</span><span class="n">create_proj_geom</span><span class="p">(</span>
+    <span class="s1">&#39;parallel&#39;</span><span class="p">,</span>    <span class="c1"># 使用平行光束（如老式CT）</span>
+    <span class="mf">1.0</span><span class="p">,</span>           <span class="c1"># 探测器间距1像素</span>
+    <span class="mi">384</span><span class="p">,</span>           <span class="c1"># 有384个探测单元</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>  <span class="c1"># 从0到180°拍180张（每1° 1张），False表示不包含终点</span>
+<span class="p">)</span>
+<span class="c1">#创建投影器</span>
+<span class="n">proj_id</span> <span class="o">=</span> <span class="n">astra</span><span class="o">.</span><span class="n">create_projector</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span><span class="p">,</span> <span class="n">proj_geom</span><span class="p">,</span> <span class="n">vol_geom</span><span class="p">)</span> 
+<span class="c1"># &#39;cuda&#39;表示使用NVIDIA显卡加速</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="span-style-font-size-30px-color-blue-3-span">
+<h1><span style="font-size: 30px; color: blue;">3.创建数据对象</span><a class="headerlink" href="#span-style-font-size-30px-color-blue-3-span" title="Permalink to this heading">#</a></h1>
+<p><span style="font-size: 20px; color: black;">astra的2D数据存贮两种类型的数据，重建体和投影数据</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">v0</span> <span class="o">=</span> <span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;-vol&#39;</span><span class="p">,</span> <span class="n">vol_geom</span><span class="p">)</span>          <span class="c1"># 空容器（全0）</span>
+<span class="n">v1</span> <span class="o">=</span> <span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;-vol&#39;</span><span class="p">,</span> <span class="n">vol_geom</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">)</span>     <span class="c1"># 所有格子填3.0</span>
+<span class="n">phantom_id</span><span class="p">,</span> <span class="n">A</span> <span class="o">=</span> <span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">shepp_logan</span><span class="p">(</span><span class="n">vol_geom</span><span class="p">)</span>  <span class="c1"># 生成标准测试模型</span>
+<span class="n">v2</span> <span class="o">=</span> <span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;-vol&#39;</span><span class="p">,</span> <span class="n">vol_geom</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>       <span class="c1"># 存入仿体数据</span>
+<span class="n">s0</span> <span class="o">=</span> <span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;-sino&#39;</span><span class="p">,</span> <span class="n">proj_geom</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><span style="font-size: 20px; color: black;">可以根据ID使用get来获取array格式的数据</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">R0</span> <span class="o">=</span> <span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">v0</span><span class="p">)</span>
+<span class="n">R1</span> <span class="o">=</span> <span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">v1</span><span class="p">)</span>
+<span class="n">R2</span> <span class="o">=</span> <span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span>
+<span class="n">R0</span><span class="p">,</span><span class="n">R1</span><span class="p">,</span><span class="n">R2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        ...,
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.]], dtype=float32),
+ array([[3., 3., 3., ..., 3., 3., 3.],
+        [3., 3., 3., ..., 3., 3., 3.],
+        [3., 3., 3., ..., 3., 3., 3.],
+        ...,
+        [3., 3., 3., ..., 3., 3., 3.],
+        [3., 3., 3., ..., 3., 3., 3.],
+        [3., 3., 3., ..., 3., 3., 3.]], dtype=float32),
+ array([[0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        ...,
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.],
+        [0., 0., 0., ..., 0., 0., 0.]], dtype=float32))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sino</span><span class="o">=</span> <span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">s0</span><span class="p">)</span>
+<span class="c1">#查看np形状</span>
+<span class="n">sino</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(180, 384)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pylab</span><span class="o">.</span><span class="n">gray</span><span class="p">()</span>  <span class="c1"># 使用灰度图显示</span>
+<span class="n">pylab</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">R2</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7da2a024e190&gt;
+</pre></div>
+</div>
+<img alt="_images/2f79aec9de1360ba1005a2fc7ef3614700f4d89aa02a3ab358eee1d4f607ba24.png" src="_images/2f79aec9de1360ba1005a2fc7ef3614700f4d89aa02a3ab358eee1d4f607ba24.png" />
+</div>
+</div>
+<p><span style="font-size: 20px; color: black;">改变获取的array变量不会影响astra对象</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">R0</span><span class="o">=</span><span class="n">R2</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">new_R0</span><span class="o">=</span><span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">v0</span><span class="p">)</span>
+<span class="n">pylab</span><span class="o">.</span><span class="n">gray</span><span class="p">()</span>  <span class="c1"># 使用灰度图显示</span>
+<span class="n">pylab</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">new_R0</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7da2a0160370&gt;
+</pre></div>
+</div>
+<img alt="_images/017a4a3093cd9688ce977f679fdcff19a8b08686c8a862405e78c50c1a93792b.png" src="_images/017a4a3093cd9688ce977f679fdcff19a8b08686c8a862405e78c50c1a93792b.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="span-style-font-size-30px-color-blue-4-astra2d-span">
+<h1><span style="font-size: 30px; color: blue;">4.编辑astra2D数据对象</span><a class="headerlink" href="#span-style-font-size-30px-color-blue-4-astra2d-span" title="Permalink to this heading">#</a></h1>
+<p><span style="font-size: 20px; color: black;">我们可以根据实际场景利用ID编辑astra2D数据对象</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#写入常数</span>
+<span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">v2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">new_R2</span><span class="o">=</span><span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span>
+<span class="n">pylab</span><span class="o">.</span><span class="n">gray</span><span class="p">()</span>  <span class="c1"># 使用灰度图显示</span>
+<span class="n">pylab</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">new_R2</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7da2a00dc910&gt;
+</pre></div>
+</div>
+<img alt="_images/017a4a3093cd9688ce977f679fdcff19a8b08686c8a862405e78c50c1a93792b.png" src="_images/017a4a3093cd9688ce977f679fdcff19a8b08686c8a862405e78c50c1a93792b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#写入矩阵</span>
+<span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">store</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+<span class="n">new_R1</span><span class="o">=</span><span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">v1</span><span class="p">)</span>
+<span class="n">pylab</span><span class="o">.</span><span class="n">gray</span><span class="p">()</span>  <span class="c1"># 使用灰度图显示</span>
+<span class="n">pylab</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">new_R1</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7da2a00531f0&gt;
+</pre></div>
+</div>
+<img alt="_images/2f79aec9de1360ba1005a2fc7ef3614700f4d89aa02a3ab358eee1d4f607ba24.png" src="_images/2f79aec9de1360ba1005a2fc7ef3614700f4d89aa02a3ab358eee1d4f607ba24.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="span-style-font-size-30px-color-blue-5-span">
+<h1><span style="font-size: 30px; color: blue;">5. 其他操作</span><a class="headerlink" href="#span-style-font-size-30px-color-blue-5-span" title="Permalink to this heading">#</a></h1>
+<p><span style="font-size: 20px; color: black;">这里介绍一些2D数据允许的其他操作，下面的表列出了官方文档提供的函数</span></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>函数类别</strong></p></th>
+<th class="head"><p><strong>函数名称</strong></p></th>
+<th class="head"><p><strong>功能描述</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>创建类</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">create()</span></code></p></td>
+<td><p>创建新2D数据对象（体积/投影数据）</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">shepp_logan()</span></code></p></td>
+<td><p>生成标准/改进版Shepp-Logan仿体数据</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">link()</span></code></p></td>
+<td><p>将现有numpy数组与ASTRA内存关联（零拷贝）</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>存取类</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">store()</span></code></p></td>
+<td><p>向现有对象填充数据（标量/数组）</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">get()</span></code></p></td>
+<td><p>获取数据副本（独立内存）</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">get_shared()</span></code></p></td>
+<td><p>获取内存共享视图（修改会影响原始数据）</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>几何类</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">get_geometry()</span></code></p></td>
+<td><p>获取对象的几何结构描述字典</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>管理类</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">delete()</span></code></p></td>
+<td><p>删除指定ID的对象</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">clear()</span></code></p></td>
+<td><p>清空所有2D数据对象</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">info()</span></code></p></td>
+<td><p>打印当前内存中所有2D对象信息</p></td>
+</tr>
+</tbody>
+</table>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#info</span>
+<span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>id  init  description
+-----------------------------------------
+2 	v     256x256 volume data 	
+3 	v     256x256 volume data 	
+4 	v     256x256 volume data 	
+5 	v     256x256 volume data 	
+6 	v     384x180 sinogram data 	
+-----------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>id  init  description
+-----------------------------------------
+-----------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+<p><span style="font-size: 20px; color: black;">link函数将array映射为astra数据对象</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">external_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">256</span><span class="p">,</span> <span class="mi">256</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">mapped_id</span> <span class="o">=</span> <span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="s1">&#39;-vol&#39;</span><span class="p">,</span> <span class="n">vol_geom</span><span class="p">,</span> <span class="n">external_array</span><span class="p">)</span>
+<span class="c1"># 此时修改external_array会同步影响ASTRA内部数据！</span>
+<span class="n">external_array</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">150</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="mi">150</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># 直接生效</span>
+<span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>id  init  description
+-----------------------------------------
+7 	v     256x256 volume data 	
+-----------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">change_R</span><span class="o">=</span><span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">mapped_id</span><span class="p">)</span>
+<span class="n">pylab</span><span class="o">.</span><span class="n">gray</span><span class="p">()</span>  <span class="c1"># 使用灰度图显示</span>
+<span class="n">pylab</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">change_R</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7da297fcb550&gt;
+</pre></div>
+</div>
+<img alt="_images/792dee6b1d0061ad29b7520c23e411d14106f6f1ea6cfdb32892907b304806a2.png" src="_images/792dee6b1d0061ad29b7520c23e411d14106f6f1ea6cfdb32892907b304806a2.png" />
+</div>
+</div>
+<p><span style="font-size: 20px; color: black;">利用 get_geometry()获取对象的几何结构描述字典</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geom</span> <span class="o">=</span> <span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">get_geometry</span><span class="p">(</span><span class="n">mapped_id</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">geom</span><span class="p">)</span>  <span class="c1"># 输出几何结构详情</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;GridColCount&#39;: 256, &#39;GridRowCount&#39;: 256, &#39;options&#39;: {&#39;WindowMinX&#39;: -128, &#39;WindowMaxX&#39;: 128, &#39;WindowMinY&#39;: -128, &#39;WindowMaxY&#39;: 128}}
+</pre></div>
+</div>
+</div>
+</div>
+<p><span style="font-size: 20px; color: black;">在生成数据时可以选择不返回具体内容</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 标准仿体</span>
+<span class="n">std_phantom_id</span><span class="p">,</span> <span class="n">std_data</span> <span class="o">=</span> <span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">shepp_logan</span><span class="p">(</span><span class="n">vol_geom</span><span class="p">)</span>
+<span class="c1"># 修改版仿体（对比度高）</span>
+<span class="n">modified_phantom_id</span> <span class="o">=</span> <span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">shepp_logan</span><span class="p">(</span><span class="n">vol_geom</span><span class="p">,</span> <span class="n">modified</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">returnData</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>id  init  description
+-----------------------------------------
+7 	v     256x256 volume data 	
+8 	v     256x256 volume data 	
+9 	v     256x256 volume data 	
+-----------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mp</span><span class="o">=</span><span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">get_shared</span><span class="p">(</span><span class="n">modified_phantom_id</span><span class="p">)</span>
+<span class="n">pylab</span><span class="o">.</span><span class="n">gray</span><span class="p">()</span>  <span class="c1"># 使用灰度图显示</span>
+<span class="n">pylab</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mp</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7da297fbdf10&gt;
+</pre></div>
+</div>
+<img alt="_images/2f79aec9de1360ba1005a2fc7ef3614700f4d89aa02a3ab358eee1d4f607ba24.png" src="_images/2f79aec9de1360ba1005a2fc7ef3614700f4d89aa02a3ab358eee1d4f607ba24.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mp</span><span class="p">[</span><span class="mi">100</span><span class="p">:</span><span class="mi">150</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="mi">150</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># 直接生效</span>
+<span class="n">new_mp</span><span class="o">=</span><span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">modified_phantom_id</span><span class="p">)</span>
+<span class="n">pylab</span><span class="o">.</span><span class="n">gray</span><span class="p">()</span>  <span class="c1"># 使用灰度图显示</span>
+<span class="n">pylab</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">new_mp</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7da297f3b550&gt;
+</pre></div>
+</div>
+<img alt="_images/d09bcd64130b71162056c22b24c60347cc4f89632888eef1aa88bec221e73722.png" src="_images/d09bcd64130b71162056c22b24c60347cc4f89632888eef1aa88bec221e73722.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">astra</span><span class="o">.</span><span class="n">data2d</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "astra"
+        },
+        kernelOptions: {
+            name: "astra",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'astra'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">数据结构</p>
+      </div>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">2D数据结构———以2维直线束为例</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#span-style-font-size-30px-color-blue-1-span"><span style="font-size: 30px; color: blue;">1. 导入工具包</span></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#span-style-font-size-30px-color-blue-2-span"><span style="font-size: 30px; color: blue;">2. 确定几何</span></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#span-style-font-size-30px-color-blue-3-span"><span style="font-size: 30px; color: blue;">3.创建数据对象</span></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#span-style-font-size-30px-color-blue-4-astra2d-span"><span style="font-size: 30px; color: blue;">4.编辑astra2D数据对象</span></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#span-style-font-size-30px-color-blue-5-span"><span style="font-size: 30px; color: blue;">5. 其他操作</span></a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
