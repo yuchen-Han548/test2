@@ -30,3 +30,9 @@ repository:
 html:
   use_issues_button: true
   use_repository_button: true
+parse:
+  myst_extended_format: true  # 启用扩展的 Markdown 支持
+  myst_allow_attachments: true  # 允许解析附件图片
+myst:
+  enable_extensions: ["attrs_inline", "colon_fence", "substitution"]
+  allow_attachments: true  # ✅ 关键配置

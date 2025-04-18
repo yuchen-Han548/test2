@@ -5,6 +5,12 @@ format: jb-book
 root: intro
 chapters:
 - file: markdown
-- file: notebooks
-- file: markdown-notebooks
-- file: mymarkdownfile
+- file: env
+- file: 确定几何
+  sections:
+  - file: par
+  - file: beam
+  - file: vec
+- file: 数据结构
+  sections:
+  - file: 2Ddata
